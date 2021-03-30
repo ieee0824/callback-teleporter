@@ -1,0 +1,20 @@
+---
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: callback-teleporter
+  description: |
+    Forward callbacks from external servers to your local environment.
+paths:
+  /healthcheck:
+    get:
+      produces:
+        - text/plain
+      operationId: getHealthCheck
+      responses:
+        200:
+          description: |
+            success
+        500:
+          description: |
+            interanal server error
