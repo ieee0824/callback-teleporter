@@ -30,6 +30,9 @@ func init() {
         "produces": [
           "text/plain"
         ],
+        "tags": [
+          "health check"
+        ],
         "operationId": "getHealthCheck",
         "responses": {
           "200": {
@@ -55,6 +58,9 @@ func init() {
       "get": {
         "produces": [
           "text/plain"
+        ],
+        "tags": [
+          "health check"
         ],
         "operationId": "getHealthCheck",
         "responses": {

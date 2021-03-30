@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 
 	"github.com/ieee0824/callback-teleporter/restapi/operations"
+	"github.com/ieee0824/callback-teleporter/restapi/operations/health_check"
 )
 
 //go:generate swagger generate server --target ../../callback-teleporter --name CallbackTeleporter --spec ../swagger.yaml --principal interface{}
@@ -37,9 +38,9 @@ func configureAPI(api *operations.CallbackTeleporterAPI) http.Handler {
 
 	api.TxtProducer = runtime.TextProducer()
 
-	if api.GetHealthCheckHandler == nil {
-		api.GetHealthCheckHandler = operations.GetHealthCheckHandlerFunc(func(params operations.GetHealthCheckParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetHealthCheck has not yet been implemented")
+	if api.HealthCheckGetHealthCheckHandler == nil {
+		api.HealthCheckGetHealthCheckHandler = health_check.GetHealthCheckHandlerFunc(func(params health_check.GetHealthCheckParams) middleware.Responder {
+			return middleware.NotImplemented("operation health_check.GetHealthCheck has not yet been implemented")
 		})
 	}
 

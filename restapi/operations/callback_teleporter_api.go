@@ -18,6 +18,8 @@ import (
 	"github.com/go-openapi/spec"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+
+	"github.com/ieee0824/callback-teleporter/restapi/operations/health_check"
 )
 
 // NewCallbackTeleporterAPI creates a new CallbackTeleporter instance
@@ -42,8 +44,8 @@ func NewCallbackTeleporterAPI(spec *loads.Document) *CallbackTeleporterAPI {
 
 		TxtProducer: runtime.TextProducer(),
 
-		GetHealthCheckHandler: GetHealthCheckHandlerFunc(func(params GetHealthCheckParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetHealthCheck has not yet been implemented")
+		HealthCheckGetHealthCheckHandler: health_check.GetHealthCheckHandlerFunc(func(params health_check.GetHealthCheckParams) middleware.Responder {
+			return middleware.NotImplemented("operation health_check.GetHealthCheck has not yet been implemented")
 		}),
 	}
 }
@@ -82,8 +84,8 @@ type CallbackTeleporterAPI struct {
 	//   - text/plain
 	TxtProducer runtime.Producer
 
-	// GetHealthCheckHandler sets the operation handler for the get health check operation
-	GetHealthCheckHandler GetHealthCheckHandler
+	// HealthCheckGetHealthCheckHandler sets the operation handler for the get health check operation
+	HealthCheckGetHealthCheckHandler health_check.GetHealthCheckHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -161,8 +163,8 @@ func (o *CallbackTeleporterAPI) Validate() error {
 		unregistered = append(unregistered, "TxtProducer")
 	}
 
-	if o.GetHealthCheckHandler == nil {
-		unregistered = append(unregistered, "GetHealthCheckHandler")
+	if o.HealthCheckGetHealthCheckHandler == nil {
+		unregistered = append(unregistered, "health_check.GetHealthCheckHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -255,7 +257,7 @@ func (o *CallbackTeleporterAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/healthcheck"] = NewGetHealthCheck(o.context, o.GetHealthCheckHandler)
+	o.handlers["GET"]["/healthcheck"] = health_check.NewGetHealthCheck(o.context, o.HealthCheckGetHealthCheckHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

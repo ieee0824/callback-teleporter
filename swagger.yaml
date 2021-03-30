@@ -8,6 +8,8 @@ info:
 paths:
   /healthcheck:
     get:
+      tags:
+        - "health check"
       produces:
         - text/plain
       operationId: getHealthCheck
