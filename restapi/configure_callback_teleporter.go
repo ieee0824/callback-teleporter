@@ -8,8 +8,8 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/runtime/middleware"
 
+	"github.com/ieee0824/callback-teleporter/restapi/handlers"
 	"github.com/ieee0824/callback-teleporter/restapi/operations"
 	"github.com/ieee0824/callback-teleporter/restapi/operations/health_check"
 )
@@ -38,11 +38,7 @@ func configureAPI(api *operations.CallbackTeleporterAPI) http.Handler {
 
 	api.TxtProducer = runtime.TextProducer()
 
-	if api.HealthCheckGetHealthCheckHandler == nil {
-		api.HealthCheckGetHealthCheckHandler = health_check.GetHealthCheckHandlerFunc(func(params health_check.GetHealthCheckParams) middleware.Responder {
-			return middleware.NotImplemented("operation health_check.GetHealthCheck has not yet been implemented")
-		})
-	}
+	api.HealthCheckGetHealthCheckHandler = health_check.GetHealthCheckHandlerFunc(handlers.NewHealthCheck().Get)
 
 	api.PreServerShutdown = func() {}
 
